@@ -1,0 +1,79 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.egg-info/
+.eggs/
+*.egg
+*.whl
+*.tar.gz
+*.zip
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Pytest
+.pytest_cache/
+.cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Cython debug symbols
+cython_debug/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# dotenv
+.env
+.env.*
+
+# IDEs / editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.swp
+*~
+
+# Logs
+*.log
+
+# Python packaging caches
+__pypackages__/
+
+# Local settings
+*.local
