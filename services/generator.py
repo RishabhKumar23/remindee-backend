@@ -76,3 +76,41 @@ async def generate_single_image(image_id: str, prompt: str, headshot_url: str):
             image.error_message = str(e)[:500]  # Truncate error message to fit in DB
             session.add(image)
             session.commit()
+
+#ANCHOR - Process Job
+async def process_job(job_id: str):
+    with Session(engine) as session:
+        job = session.get(Job, job_id)
+        #NOTE - mark job as processing
+        job.status = "processing"
+        prompt = job.prompt
+        headshot_url = job.headshot_url
+        session.add(job)
+        session.commit()
+
+        #NOTE - find all images for the job
+        images = session.exec(
+            select(Image).where(Image.job_id == job_id)
+        ).all()
+
+        images_ids = [i.id for i in images]
+
+        #NOTE - start one worker for each image
+        tasks = [
+            generate_single_image(image_id=iid, prompt=prompt, headshot_url=headshot_url)
+            for iid in images_ids
+        ]
+
+        #NOTE - wait for all workers to finish
+        await asyncio.gather(*tasks, return_exceptions=True)
+
+        #NOTE - mark job as completed/error
+        with Session(engine) as session:
+            images = session.exec(
+                select(Image).where(Image.job_id == job_id)
+            ).all()
+            all_failed = all(i.status == "failed" for i in images)
+            job = session.get(Job, job_id)
+            job.status = "failed" if all_failed else "completed"
+            session.add(job)
+            session.commit()
