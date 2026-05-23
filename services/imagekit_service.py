@@ -22,7 +22,7 @@ def upload_file(file_bytes: bytes, file_name: str, folder: str, content_type: st
 def get_variants(base_url: str) -> dict:
     """Returns 3 sizes variant URL using imagekit transformation"""
     variants = {
-        "thumbnail": f"{base_url}?tr=w-1280,h-720, c-maintain_ration, fo-auto",
+        "Image": f"{base_url}?tr=w-1280,h-720, c-maintain_ration, fo-auto",
         "shots": f"{base_url}?tr=w-1080,h-1920, c-maintain_ration, fo-auto",
         "avatar": f"{base_url}?tr=w-256,h-256,fo-face:r-max"
     }
